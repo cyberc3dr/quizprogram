@@ -1,10 +1,14 @@
 package ru.cyberc3dr.quiz;
 
 import ru.cyberc3dr.quiz.factory.*;
+import ru.cyberc3dr.quiz.test.Test;
+import ru.cyberc3dr.quiz.util.ConsoleHandler;
 import ru.cyberc3dr.quiz.io.FileTestLoader;
 import ru.cyberc3dr.quiz.io.PlainTextParser;
 import ru.cyberc3dr.quiz.scoring.PassFailStrategy;
 import ru.cyberc3dr.quiz.scoring.PercGradingStrategy;
+
+import java.util.Scanner;
 
 /**
  * Точка входа программы.
@@ -12,8 +16,6 @@ import ru.cyberc3dr.quiz.scoring.PercGradingStrategy;
 public final class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-
         QuestionFactoryRegistry registry = QuestionFactoryRegistry.getInstance();
 
         registry.register("text", new TextQuestionFactory());
@@ -22,16 +24,23 @@ public final class Main {
         registry.register("ordered", new OrderedQuestionFactory());
         registry.register("ranged", new RangedQuestionFactory());
 
-        FileTestLoader loader = new FileTestLoader("test.txt", new PlainTextParser());
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите имя файла для загрузки теста: ");
+        String filename = scanner.nextLine();
+
+        FileTestLoader loader = new FileTestLoader(filename, new PlainTextParser());
         Test test = loader.load();
 
-        int score = test.run();
-        test.printScore(score);
+        try(var handler = new ConsoleHandler(scanner)) {
+            handler.runTest(test);
+        }
 
         test.setStrategy(new PercGradingStrategy());
-        test.printScore(score);
+        test.printScore();
 
         test.setStrategy(new PassFailStrategy(60));
-        test.printScore(score);
+        test.printScore();
     }
 }
+

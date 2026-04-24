@@ -1,6 +1,6 @@
 package ru.cyberc3dr.quiz.scoring;
 
-import ru.cyberc3dr.quiz.Test;
+import ru.cyberc3dr.quiz.test.Test;
 
 public final class SumGradingStrategy implements GradingStrategy {
 

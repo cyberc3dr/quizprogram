@@ -1,5 +1,7 @@
 package ru.cyberc3dr.quiz.scoring;
 
+import ru.cyberc3dr.quiz.test.Test;
+
 public final class PassFailStrategy implements GradingStrategy {
 
     private final double passThreshold;
@@ -9,7 +11,7 @@ public final class PassFailStrategy implements GradingStrategy {
     }
 
     @Override
-    public void grade(ru.cyberc3dr.quiz.Test test, int score) {
+    public void grade(Test test, int score) {
         int maxScore = test.getMaxScore();
         double percentage = (double) score / maxScore * 100;
 

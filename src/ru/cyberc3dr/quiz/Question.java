@@ -1,9 +1,9 @@
 package ru.cyberc3dr.quiz;
 
 import ru.cyberc3dr.quiz.answer.Answer;
+import ru.cyberc3dr.quiz.test.Test;
 
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Класс представляющий структуру вопроса.
@@ -23,20 +23,7 @@ public final class Question {
         this.answer = answer;
     }
 
-    public int ask(Scanner scanner) {
-        System.out.println("\n" + title);
-
-        if(options.size() == 1) {
-            System.out.println("Ans: " + options.getFirst());
-        } else if(options.size() > 1) {
-            for(int i = 0; i < options.size(); i++) {
-                System.out.println(i+1 + ". " + options.get(i));
-            }
-        }
-
-        System.out.println("Введите ответ:");
-        String input = scanner.nextLine();
-
+    public int checkAnswer(String input) {
         return answer.check(input) ? score : 0;
     }
 

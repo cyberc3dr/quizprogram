@@ -1,8 +1,8 @@
 package ru.cyberc3dr.quiz.io;
 
-import ru.cyberc3dr.quiz.QuestionFactoryRegistry;
-import ru.cyberc3dr.quiz.Test;
-import ru.cyberc3dr.quiz.TestBuilder;
+import ru.cyberc3dr.quiz.factory.QuestionFactoryRegistry;
+import ru.cyberc3dr.quiz.test.Test;
+import ru.cyberc3dr.quiz.test.TestBuilder;
 import ru.cyberc3dr.quiz.data.QuestionData;
 
 import java.io.IOException;

@@ -1,7 +1,7 @@
-package ru.cyberc3dr.quiz;
+package ru.cyberc3dr.quiz.factory;
 
+import ru.cyberc3dr.quiz.Question;
 import ru.cyberc3dr.quiz.data.QuestionData;
-import ru.cyberc3dr.quiz.factory.QuestionFactory;
 
 import java.util.HashMap;
 import java.util.Map;
