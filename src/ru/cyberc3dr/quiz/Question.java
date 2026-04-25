@@ -8,13 +8,12 @@ import java.util.List;
 /**
  * Класс представляющий структуру вопроса.
  * Является контекстом для стратегий Answer.
- * Также является листом в рамках {@link Test}
  */
 public final class Question {
     private final String title;
     private final List<String> options;
     private final int score;
-    private final Answer answer;
+    private Answer answer;
 
     public Question(String title, List<String> options, int score, Answer answer) {
         this.title = title;
@@ -25,6 +24,10 @@ public final class Question {
 
     public int checkAnswer(String input) {
         return answer.check(input) ? score : 0;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
     }
 
     public String getTitle() {

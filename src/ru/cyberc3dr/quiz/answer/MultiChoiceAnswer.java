@@ -2,9 +2,7 @@ package ru.cyberc3dr.quiz.answer;
 
 import ru.cyberc3dr.quiz.util.NumberStringUtils;
 
-import java.util.Arrays;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public final class MultiChoiceAnswer implements Answer {
 

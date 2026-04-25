@@ -3,24 +3,28 @@ package ru.cyberc3dr.quiz.test;
 import ru.cyberc3dr.quiz.Question;
 import ru.cyberc3dr.quiz.scoring.GradingStrategy;
 import ru.cyberc3dr.quiz.scoring.SumGradingStrategy;
+import ru.cyberc3dr.quiz.state.ReadyState;
+import ru.cyberc3dr.quiz.state.TestState;
 
 import java.util.List;
 
 /**
  * Тест состоящий из вопросов.
- * Является композитом для объектов типа {@link Question}.
  * Контекст для стратегий оценки.
  * Является Originator для снимка.
+ * Использует паттерн State для управления состояниями теста.
  */
 public final class Test {
 
     private final List<Question> questions;
     private GradingStrategy strategy = new SumGradingStrategy();
+    private TestState state;
     private int currentQuestionIndex = 0;
     private int currentScore = 0;
 
     public Test(List<Question> questions) {
         this.questions = questions;
+        this.state = new ReadyState();
     }
 
     public void addQuestion(Question question) {
@@ -45,6 +49,14 @@ public final class Test {
         this.strategy = strategy;
     }
 
+    public TestState getState() {
+        return state;
+    }
+
+    public void setState(TestState state) {
+        this.state = state;
+    }
+
     public int getCurrentQuestionIndex() {
         return currentQuestionIndex;
     }
@@ -65,28 +77,24 @@ public final class Test {
         this.currentScore += score;
     }
 
-    public void advanceQuestion() {
-        this.currentQuestionIndex++;
+    public void reset() {
+        state.reset(this);
     }
 
     public boolean hasNextQuestion() {
-        return currentQuestionIndex < questions.size();
+        return state.hasNextQuestion(this);
     }
 
     public Question getNextQuestion() {
-        if (!hasNextQuestion()) {
-            throw new IllegalStateException("No more questions");
-        }
-        return questions.get(currentQuestionIndex);
+        return state.getNextQuestion(this);
     }
 
-    public void reset() {
-        currentQuestionIndex = 0;
-        currentScore = 0;
+    public void advanceQuestion() {
+        state.advanceQuestion(this);
     }
 
     public void printScore() {
-        strategy.grade(this, currentScore);
+        state.printScore(this);
     }
 
     public TestSnapshot createSnapshot() {

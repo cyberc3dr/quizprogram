@@ -10,7 +10,8 @@ import java.util.List;
 /**
  * Паттерн билдер для {@link Test}
  */
-public final class TestBuilder {
+public final class TestBuilder implements Builder<Test> {
+
     private List<Question> questions = new ArrayList<>();
     private GradingStrategy strategy = new SumGradingStrategy();
 
