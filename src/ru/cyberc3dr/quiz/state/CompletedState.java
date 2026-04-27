@@ -32,6 +32,6 @@ public final class CompletedState implements TestState {
 
     @Override
     public void printScore(Test test) {
-        test.getStrategy().grade(test, test.getCurrentScore());
+        test.getStrategy().grade(test.getCurrentScore(), test.getMaxScore());
     }
 }

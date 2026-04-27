@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Паттерн билдер для {@link Test}
  */
-public final class TestBuilder implements Builder<Test> {
+public final class TestBuilder implements ITestBuilder {
 
     private List<Question> questions = new ArrayList<>();
     private GradingStrategy strategy = new SumGradingStrategy();
@@ -26,6 +26,9 @@ public final class TestBuilder implements Builder<Test> {
     }
 
     public Test build() {
+        if(questions.isEmpty())
+            throw new IllegalStateException("Test must contain at least one question");
+
         Test test = new Test(questions);
         test.setStrategy(strategy);
         return test;

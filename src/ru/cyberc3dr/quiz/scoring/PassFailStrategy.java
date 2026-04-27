@@ -11,8 +11,7 @@ public final class PassFailStrategy implements GradingStrategy {
     }
 
     @Override
-    public void grade(Test test, int score) {
-        int maxScore = test.getMaxScore();
+    public void grade(int score, int maxScore) {
         double percentage = (double) score / maxScore * 100;
 
         if (percentage >= passThreshold) {
