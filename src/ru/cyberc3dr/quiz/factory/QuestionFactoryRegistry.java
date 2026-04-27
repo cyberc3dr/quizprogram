@@ -1,13 +1,14 @@
 package ru.cyberc3dr.quiz.factory;
 
-import ru.cyberc3dr.quiz.Question;
+import ru.cyberc3dr.quiz.tree.Question;
 import ru.cyberc3dr.quiz.data.QuestionData;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Регистр фабрик (необходим для парсинга из файла)
+ * Регистр фабрик {@link QuestionFactory}
+ * <p>
  * Так же является синглтоном.
  */
 public final class QuestionFactoryRegistry {
@@ -17,7 +18,7 @@ public final class QuestionFactoryRegistry {
     private final Map<String, QuestionFactory> map = new HashMap<>();
 
     private QuestionFactoryRegistry() {
-
+        // приватный конструктор
     }
 
     public static QuestionFactoryRegistry getInstance() {

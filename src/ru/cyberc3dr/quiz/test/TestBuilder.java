@@ -1,8 +1,10 @@
 package ru.cyberc3dr.quiz.test;
 
-import ru.cyberc3dr.quiz.Question;
+import ru.cyberc3dr.quiz.tree.Question;
 import ru.cyberc3dr.quiz.scoring.GradingStrategy;
 import ru.cyberc3dr.quiz.scoring.SumGradingStrategy;
+import ru.cyberc3dr.quiz.tree.Node;
+import ru.cyberc3dr.quiz.tree.QuestionSection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,24 +14,28 @@ import java.util.List;
  */
 public final class TestBuilder implements ITestBuilder {
 
-    private List<Question> questions = new ArrayList<>();
+    private final List<Node> nodes = new ArrayList<>();
     private GradingStrategy strategy = new SumGradingStrategy();
 
-    public TestBuilder addQuestion(Question question) {
-        this.questions.add(question);
+    @Override
+    public TestBuilder addNode(Node node) {
+        this.nodes.add(node);
         return this;
     }
 
+    @Override
     public TestBuilder setGradingStrategy(GradingStrategy strategy) {
         this.strategy = strategy;
         return this;
     }
 
+    @Override
     public Test build() {
-        if(questions.isEmpty())
-            throw new IllegalStateException("Test must contain at least one question");
+        if (nodes.isEmpty()) {
+            throw new IllegalStateException("Test must contain at least one node");
+        }
 
-        Test test = new Test(questions);
+        Test test = new Test(nodes);
         test.setStrategy(strategy);
         return test;
     }

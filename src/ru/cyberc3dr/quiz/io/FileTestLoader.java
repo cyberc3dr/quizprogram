@@ -1,9 +1,8 @@
 package ru.cyberc3dr.quiz.io;
 
-import ru.cyberc3dr.quiz.factory.QuestionFactoryRegistry;
 import ru.cyberc3dr.quiz.test.Test;
 import ru.cyberc3dr.quiz.test.TestBuilder;
-import ru.cyberc3dr.quiz.data.QuestionData;
+import ru.cyberc3dr.quiz.tree.Node;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,14 +10,14 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
- * Фасад для загрузки теста из файла.
+ * Фасад для загрузки {@link Test} из файла.
  */
 public final class FileTestLoader implements TestLoader {
 
     private final String path;
-    private final QuestionParser<String> parser;
+    private final TestParser<String> parser;
 
-    public FileTestLoader(String path, QuestionParser<String> parser) {
+    public FileTestLoader(String path, TestParser<String> parser) {
         this.path = path;
         this.parser = parser;
     }
@@ -27,7 +26,7 @@ public final class FileTestLoader implements TestLoader {
         return path;
     }
 
-    public QuestionParser<String> getParser() {
+    public TestParser<String> getParser() {
         return parser;
     }
 
@@ -35,14 +34,11 @@ public final class FileTestLoader implements TestLoader {
     public Test load() {
         try {
             String content = Files.readString(Path.of(path));
-
-            List<QuestionData> dataList = parser.parse(content);
-
-            QuestionFactoryRegistry registry = QuestionFactoryRegistry.getInstance();
+            List<Node> nodes = parser.parse(content);
             TestBuilder builder = new TestBuilder();
 
-            for(QuestionData data : dataList) {
-                builder.addQuestion(registry.create(data));
+            for (Node node : nodes) {
+                builder.addNode(node);
             }
 
             return builder.build();

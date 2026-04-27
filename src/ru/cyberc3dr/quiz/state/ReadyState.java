@@ -1,7 +1,9 @@
 package ru.cyberc3dr.quiz.state;
 
-import ru.cyberc3dr.quiz.Question;
 import ru.cyberc3dr.quiz.test.Test;
+import ru.cyberc3dr.quiz.test.TestRunContext;
+
+import java.util.Scanner;
 
 /**
  * Состояние: тест готов к прохождению.
@@ -9,25 +11,18 @@ import ru.cyberc3dr.quiz.test.Test;
 public final class ReadyState implements TestState {
 
     @Override
+    public void start(Test test, Scanner scanner) {
+        test.setCurrentScore(0);
+        test.setState(new ActiveState());
+
+        test.run(new TestRunContext(test, scanner));
+
+        test.setState(new CompletedState());
+    }
+
+    @Override
     public void reset(Test test) {
-        System.out.println("Сбрасывать нечего, тест никто не выполнял.");
-    }
-
-    @Override
-    public boolean hasNextQuestion(Test test) {
-        return !test.getQuestions().isEmpty();
-    }
-
-    @Override
-    public Question getNextQuestion(Test test) {
-        test.setState(new ActiveState());
-        return test.getQuestions().getFirst();
-    }
-
-    @Override
-    public void advanceQuestion(Test test) {
-        test.setState(new ActiveState());
-        test.setCurrentQuestionIndex(1);
+        test.setCurrentScore(0);
     }
 
     @Override

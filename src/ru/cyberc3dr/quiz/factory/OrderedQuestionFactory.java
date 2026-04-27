@@ -1,6 +1,6 @@
 package ru.cyberc3dr.quiz.factory;
 
-import ru.cyberc3dr.quiz.Question;
+import ru.cyberc3dr.quiz.tree.Question;
 import ru.cyberc3dr.quiz.answer.OrderedAnswer;
 import ru.cyberc3dr.quiz.data.QuestionData;
 
