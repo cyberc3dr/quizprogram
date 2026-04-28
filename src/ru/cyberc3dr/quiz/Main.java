@@ -27,7 +27,7 @@ public final class Main {
             System.out.print("Введите имя файла для загрузки теста: ");
             String filename = scanner.nextLine();
 
-            FileTestLoader loader = new FileTestLoader(filename, new PlainTestParser());
+            FileTestLoader loader = new FileTestLoader(filename, PlainTestParser.getInstance());
             Test test = loader.load();
 
             test.reset();

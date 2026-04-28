@@ -15,8 +15,19 @@ import java.util.Map;
 
 /**
  * Парсер {@link Node} из строки.
+ * Является синглтоном.
  */
 public final class PlainTestParser implements TestParser<String> {
+
+    private static final PlainTestParser INSTANCE = new PlainTestParser();
+
+    private PlainTestParser() {
+
+    }
+
+    public static PlainTestParser getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public List<Node> parse(String source) {

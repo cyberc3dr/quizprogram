@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Объект-декоратор для Map String String
- */
 public final class MapQuestionData implements QuestionData {
 
     private final Map<String, String> data;
