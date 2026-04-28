@@ -31,7 +31,7 @@ public final class Main {
             Test test = loader.load();
 
             test.reset();
-            test.run(scanner);
+            test.start(scanner);
             test.printScore();
 
             test.setStrategy(new PercGradingStrategy());

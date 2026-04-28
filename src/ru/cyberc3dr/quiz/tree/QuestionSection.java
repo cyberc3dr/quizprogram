@@ -35,7 +35,9 @@ public final class QuestionSection implements Container {
 
     @Override
     public void run(TestRunContext context) {
-        System.out.println("\n== " + title + " ==");
+        if (!title.isBlank()) {
+            System.out.println("\n== " + title + " ==");
+        }
         for (Node child : children) {
             child.run(context);
         }

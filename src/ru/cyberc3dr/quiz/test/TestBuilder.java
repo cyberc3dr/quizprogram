@@ -1,6 +1,5 @@
 package ru.cyberc3dr.quiz.test;
 
-import ru.cyberc3dr.quiz.tree.Question;
 import ru.cyberc3dr.quiz.scoring.GradingStrategy;
 import ru.cyberc3dr.quiz.scoring.SumGradingStrategy;
 import ru.cyberc3dr.quiz.tree.Node;
@@ -35,8 +34,11 @@ public final class TestBuilder implements ITestBuilder {
             throw new IllegalStateException("Test must contain at least one node");
         }
 
-        Test test = new Test(nodes);
-        test.setStrategy(strategy);
-        return test;
+        QuestionSection rootSection = new QuestionSection("");
+        for (Node node : nodes) {
+            rootSection.add(node);
+        }
+
+        return new Test(rootSection, strategy);
     }
 }
