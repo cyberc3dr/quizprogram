@@ -21,6 +21,12 @@ public final class PlainTestParser implements TestParser<String> {
 
     private static final PlainTestParser INSTANCE = new PlainTestParser();
 
+    public static final String COMMENT = "#";
+    public static final String MENU_START = "menu ";
+    public static final String MENU_END = "endmenu";
+    public static final String QUESTION_START = "question";
+    public static final String QUESTION_END = "endquestion";
+
     private PlainTestParser() {
 
     }
@@ -43,9 +49,9 @@ public final class PlainTestParser implements TestParser<String> {
         for (int i = 0; i < lines.length; i++) {
             String line = lines[i].trim();
 
-            if (line.isEmpty() || line.startsWith("#")) continue;
+            if (line.isEmpty() || line.startsWith(COMMENT)) continue;
 
-            if (line.startsWith("menu ")) {
+            if (line.startsWith(MENU_START)) {
                 QuestionSection section = new QuestionSection(parseMenuTitle(line, i + 1));
                 if (sectionStack.isEmpty()) {
                     rootNodes.add(section);
@@ -56,7 +62,7 @@ public final class PlainTestParser implements TestParser<String> {
                 continue;
             }
 
-            if (line.equals("endmenu")) {
+            if (line.equals(MENU_END)) {
                 if (sectionStack.isEmpty()) {
                     throw new IllegalArgumentException("Unexpected endmenu at line " + (i + 1));
                 }
@@ -64,7 +70,7 @@ public final class PlainTestParser implements TestParser<String> {
                 continue;
             }
 
-            if (line.equals("question")) {
+            if (line.equals(QUESTION_START)) {
                 Map<String, String> data = new HashMap<>();
                 int questionStartLine = i + 1;
                 i++;
@@ -77,11 +83,11 @@ public final class PlainTestParser implements TestParser<String> {
                         continue;
                     }
 
-                    if (questionLine.equals("endquestion")) break;
+                    if (questionLine.equals(QUESTION_END)) break;
 
-                    if (questionLine.equals("question")
-                            || questionLine.startsWith("menu ")
-                            || questionLine.equals("endmenu")) {
+                    if (questionLine.equals(QUESTION_START)
+                            || questionLine.startsWith(MENU_START)
+                            || questionLine.equals(MENU_END)) {
                         throw new IllegalArgumentException("Question block started at line "
                                 + questionStartLine + " is missing endquestion");
                     }
@@ -95,7 +101,7 @@ public final class PlainTestParser implements TestParser<String> {
                     i++;
                 }
 
-                if (i >= lines.length || !lines[i].trim().equals("endquestion")) {
+                if (i >= lines.length || !lines[i].trim().equals(QUESTION_END)) {
                     throw new IllegalArgumentException("Question block started at line "
                             + questionStartLine + " is missing endquestion");
                 }
