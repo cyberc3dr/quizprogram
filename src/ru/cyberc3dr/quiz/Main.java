@@ -1,11 +1,13 @@
 package ru.cyberc3dr.quiz;
 
-import ru.cyberc3dr.quiz.factory.*;
-import ru.cyberc3dr.quiz.test.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.cyberc3dr.quiz.config.AppConfig;
 import ru.cyberc3dr.quiz.io.FileTestLoader;
-import ru.cyberc3dr.quiz.io.PlainTestParser;
+import ru.cyberc3dr.quiz.io.TestLoader;
+import ru.cyberc3dr.quiz.scoring.GradingStrategy;
 import ru.cyberc3dr.quiz.scoring.PassFailStrategy;
 import ru.cyberc3dr.quiz.scoring.PercGradingStrategy;
+import ru.cyberc3dr.quiz.test.Test;
 
 import java.util.Scanner;
 
@@ -15,29 +17,23 @@ import java.util.Scanner;
 public final class Main {
 
     public static void main(String[] args) {
-        QuestionFactoryRegistry registry = QuestionFactoryRegistry.getInstance();
-
-        registry.register("text", new TextQuestionFactory());
-        registry.register("single", new SingleQuestionFactory());
-        registry.register("multi", new MultiQuestionFactory());
-        registry.register("ordered", new OrderedQuestionFactory());
-        registry.register("ranged", new RangedQuestionFactory());
-
-        try (Scanner scanner = new Scanner(System.in)) {
+        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+             Scanner scanner = new Scanner(System.in)) {
             System.out.print("Введите имя файла для загрузки теста: ");
             String filename = scanner.nextLine();
 
-            FileTestLoader loader = new FileTestLoader(filename, PlainTestParser.getInstance());
+            TestLoader loader = context.getBean(TestLoader.class, filename);
+
             Test test = loader.load();
 
             test.reset();
             test.start(scanner);
             test.printScore();
 
-            test.setStrategy(new PercGradingStrategy());
+            test.setStrategy(context.getBean("percGradingStrategy", GradingStrategy.class));
             test.printScore();
 
-            test.setStrategy(new PassFailStrategy(60));
+            test.setStrategy((GradingStrategy) context.getBean("passFailStrategy", 60.0));
             test.printScore();
         }
     }

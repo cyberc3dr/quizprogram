@@ -1,5 +1,11 @@
 package ru.cyberc3dr.quiz.io;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import ru.cyberc3dr.quiz.scoring.GradingStrategy;
 import ru.cyberc3dr.quiz.test.Test;
 import ru.cyberc3dr.quiz.test.TestBuilder;
 import ru.cyberc3dr.quiz.tree.Node;
@@ -12,22 +18,23 @@ import java.util.List;
 /**
  * Фасад для загрузки {@link Test} из файла.
  */
+@Component("fileTestLoader")
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public final class FileTestLoader implements TestLoader {
 
-    private final String path;
-    private final TestParser<String> parser;
+    @Autowired
+    private TestParser<String> parser;
+    @Autowired
+    private GradingStrategy strategy;
 
-    public FileTestLoader(String path, TestParser<String> parser) {
+    private String path;
+
+    public FileTestLoader(@Value("hello.txt") String path) {
         this.path = path;
-        this.parser = parser;
     }
 
     public String getPath() {
         return path;
-    }
-
-    public TestParser<String> getParser() {
-        return parser;
     }
 
     @Override
@@ -35,7 +42,7 @@ public final class FileTestLoader implements TestLoader {
         try {
             String content = Files.readString(Path.of(path));
             List<Node> nodes = parser.parse(content);
-            TestBuilder builder = new TestBuilder();
+            TestBuilder builder = new TestBuilder(strategy);
 
             for (Node node : nodes) {
                 builder.addNode(node);

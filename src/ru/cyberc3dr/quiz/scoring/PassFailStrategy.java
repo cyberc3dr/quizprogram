@@ -18,4 +18,11 @@ public final class PassFailStrategy implements GradingStrategy {
             System.out.println("К сожалению, вы не прошли тест.");
         }
     }
+
+    @Override
+    public String toString() {
+        return "PassFailStrategy{" +
+                "passThreshold=" + passThreshold +
+                '}';
+    }
 }

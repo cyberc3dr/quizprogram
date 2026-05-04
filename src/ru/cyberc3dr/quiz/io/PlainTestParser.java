@@ -1,7 +1,11 @@
 package ru.cyberc3dr.quiz.io;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 import ru.cyberc3dr.quiz.data.MapQuestionData;
-import ru.cyberc3dr.quiz.factory.QuestionFactoryRegistry;
+import ru.cyberc3dr.quiz.data.QuestionData;
+import ru.cyberc3dr.quiz.factory.QuestionFactory;
 import ru.cyberc3dr.quiz.tree.Node;
 import ru.cyberc3dr.quiz.tree.Question;
 import ru.cyberc3dr.quiz.tree.QuestionSection;
@@ -15,11 +19,10 @@ import java.util.Map;
 
 /**
  * Парсер {@link Node} из строки.
- * Является синглтоном.
  */
+@Component("plainText")
+@Primary
 public final class PlainTestParser implements TestParser<String> {
-
-    private static final PlainTestParser INSTANCE = new PlainTestParser();
 
     public static final String COMMENT = "#";
     public static final String MENU_START = "menu ";
@@ -27,12 +30,17 @@ public final class PlainTestParser implements TestParser<String> {
     public static final String QUESTION_START = "question";
     public static final String QUESTION_END = "endquestion";
 
-    private PlainTestParser() {
+    @Autowired
+    private Map<String, QuestionFactory> map;
 
-    }
+    private Question createQuestion(QuestionData data) {
+        QuestionFactory factory = map.get(data.get("QuestionType"));
 
-    public static PlainTestParser getInstance() {
-        return INSTANCE;
+        if(factory == null) {
+            throw new IllegalArgumentException("Unknown question type: " + data.get("QuestionType"));
+        }
+
+        return factory.createQuestion(data);
     }
 
     @Override
@@ -44,8 +52,6 @@ public final class PlainTestParser implements TestParser<String> {
 
         List<Node> rootNodes = new ArrayList<>();
         Deque<QuestionSection> sectionStack = new ArrayDeque<>();
-        QuestionFactoryRegistry registry = QuestionFactoryRegistry.getInstance();
-
         for (int i = 0; i < lines.length; i++) {
             String line = lines[i].trim();
 
@@ -106,7 +112,7 @@ public final class PlainTestParser implements TestParser<String> {
                             + questionStartLine + " is missing endquestion");
                 }
 
-                Question question = registry.create(new MapQuestionData(data));
+                Question question = createQuestion(new MapQuestionData(data));
                 if (sectionStack.isEmpty()) {
                     rootNodes.add(question);
                 } else {

@@ -14,7 +14,11 @@ import java.util.List;
 public final class TestBuilder implements ITestBuilder {
 
     private final List<Node> nodes = new ArrayList<>();
-    private GradingStrategy strategy = new SumGradingStrategy();
+    private GradingStrategy strategy;
+
+    public TestBuilder(GradingStrategy strategy) {
+        this.strategy = strategy;
+    }
 
     @Override
     public TestBuilder addNode(Node node) {

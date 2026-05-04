@@ -1,0 +1,15 @@
+[versions]
+spring = "7.0.7"
+aspectj = "1.9.25.1"
+
+[libraries]
+spring-core = { module = "org.springframework:spring-core", version.ref = "spring" }
+spring-beans = { module = "org.springframework:spring-beans", version.ref = "spring" }
+spring-ctx = { module = "org.springframework:spring-context", version.ref = "spring" }
+spring-aop = { module = "org.springframework:spring-aop", version.ref = "spring" }
+
+aspectj-rt = { module = "org.aspectj:aspectjrt", version.ref = "aspectj" }
+aspectj-weaver = { module = "org.aspectj:aspectjweaver", version.ref = "aspectj" }
+
+[plugins]
+shadow = "com.gradleup.shadow:9.4.1"

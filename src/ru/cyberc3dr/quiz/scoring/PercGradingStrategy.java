@@ -8,4 +8,9 @@ public final class PercGradingStrategy implements GradingStrategy {
 
         System.out.printf("Вы набрали %.2f%%.\n", percentage);
     }
+
+    @Override
+    public String toString() {
+        return "PercGradingStrategy{}";
+    }
 }

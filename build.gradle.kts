@@ -1,6 +1,7 @@
 plugins {
     java
     application
+    alias(libs.plugins.shadow)
 }
 
 application {
@@ -15,7 +16,13 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.spring.core)
+    implementation(libs.spring.beans)
+    implementation(libs.spring.ctx)
+    implementation(libs.spring.aop)
 
+    implementation(libs.aspectj.rt)
+    implementation(libs.aspectj.weaver)
 }
 
 tasks.withType<JavaCompile> {
