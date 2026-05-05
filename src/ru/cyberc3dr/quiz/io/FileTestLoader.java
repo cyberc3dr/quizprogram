@@ -1,7 +1,6 @@
 package ru.cyberc3dr.quiz.io;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.cyberc3dr.quiz.scoring.GradingStrategy;
@@ -18,7 +17,7 @@ import java.util.List;
  * Фасад для загрузки {@link Test} из файла.
  */
 @Component("fileTestLoader")
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Scope("prototype")
 public final class FileTestLoader implements TestLoader {
 
     @Autowired
