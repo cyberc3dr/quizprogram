@@ -7,5 +7,6 @@ import ru.cyberc3dr.quiz.test.TestRunContext;
  */
 public interface Node {
     void run(TestRunContext context);
+
     int getMaxScore();
 }

@@ -1,6 +1,5 @@
 package ru.cyberc3dr.quiz.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import ru.cyberc3dr.quiz.scoring.GradingStrategy;
 import ru.cyberc3dr.quiz.scoring.PassFailStrategy;
@@ -25,7 +24,7 @@ public class AppConfig {
 
     @Bean
     @Scope("prototype")
-    public GradingStrategy passFailStrategy(@Value("50.0") double passThreshold) {
+    public GradingStrategy passFailStrategy(double passThreshold) {
         return new PassFailStrategy(passThreshold);
     }
 }

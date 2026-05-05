@@ -9,6 +9,8 @@ import ru.cyberc3dr.quiz.tree.Node;
  */
 public interface ITestBuilder {
     ITestBuilder addNode(Node node);
+
     ITestBuilder setGradingStrategy(GradingStrategy strategy);
+
     Test build();
 }

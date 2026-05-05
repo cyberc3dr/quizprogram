@@ -13,8 +13,12 @@ import java.util.Set;
  */
 public interface QuestionData {
     String get(String key);
+
     Integer getInt(String key);
+
     Set<Integer> getIntSet(String key);
+
     List<Integer> getIntList(String key);
+
     List<String> getStringList(String key);
 }

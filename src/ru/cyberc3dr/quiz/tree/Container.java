@@ -5,5 +5,6 @@ package ru.cyberc3dr.quiz.tree;
  */
 public interface Container extends Node {
     void add(Node node);
+
     void remove(Node node);
 }

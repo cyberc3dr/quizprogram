@@ -17,7 +17,7 @@ public final class MapQuestionData implements QuestionData {
 
     public String get(String key) {
         String value = data.get(key);
-        if(value == null) {
+        if (value == null) {
             throw new IllegalArgumentException("Key '" + key + "' not found in question data.");
         }
         return value;

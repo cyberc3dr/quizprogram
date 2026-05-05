@@ -9,14 +9,13 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 import ru.cyberc3dr.quiz.data.QuestionData;
 import ru.cyberc3dr.quiz.io.FileTestLoader;
-import ru.cyberc3dr.quiz.scoring.PassFailStrategy;
 import ru.cyberc3dr.quiz.tree.Question;
 
 import java.util.List;
 
 @Aspect
 @Component
-public class BeanLoggingAspect {
+public final class BeanLoggingAspect {
 
     @Around("execution(* ru.cyberc3dr.quiz.io.TestParser.parse(..))")
     public Object aroundParse(ProceedingJoinPoint joinPoint) throws Throwable {

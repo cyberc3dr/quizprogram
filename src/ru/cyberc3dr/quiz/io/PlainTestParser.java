@@ -10,12 +10,7 @@ import ru.cyberc3dr.quiz.tree.Node;
 import ru.cyberc3dr.quiz.tree.Question;
 import ru.cyberc3dr.quiz.tree.QuestionSection;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Парсер {@link Node} из строки.
@@ -36,7 +31,7 @@ public final class PlainTestParser implements TestParser<String> {
     private Question createQuestion(QuestionData data) {
         QuestionFactory factory = map.get(data.get("QuestionType"));
 
-        if(factory == null) {
+        if (factory == null) {
             throw new IllegalArgumentException("Unknown question type: " + data.get("QuestionType"));
         }
 

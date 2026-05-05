@@ -1,7 +1,6 @@
 package ru.cyberc3dr.quiz.io;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -29,7 +28,7 @@ public final class FileTestLoader implements TestLoader {
 
     private String path;
 
-    public FileTestLoader(@Value("hello.txt") String path) {
+    public FileTestLoader(String path) {
         this.path = path;
     }
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Функциональный интерфейс для парсеров {@link Node}
+ *
  * @param <T> тип источника
  */
 @FunctionalInterface

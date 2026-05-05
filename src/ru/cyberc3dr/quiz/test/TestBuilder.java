@@ -1,7 +1,6 @@
 package ru.cyberc3dr.quiz.test;
 
 import ru.cyberc3dr.quiz.scoring.GradingStrategy;
-import ru.cyberc3dr.quiz.scoring.SumGradingStrategy;
 import ru.cyberc3dr.quiz.tree.Node;
 import ru.cyberc3dr.quiz.tree.QuestionSection;
 

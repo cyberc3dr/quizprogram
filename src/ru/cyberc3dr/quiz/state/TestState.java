@@ -11,6 +11,8 @@ import java.util.Scanner;
  */
 public interface TestState {
     void start(Test test, Scanner scanner);
+
     void reset(Test test);
+
     void printScore(Test test);
 }

@@ -2,11 +2,8 @@ package ru.cyberc3dr.quiz;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.cyberc3dr.quiz.config.AppConfig;
-import ru.cyberc3dr.quiz.io.FileTestLoader;
 import ru.cyberc3dr.quiz.io.TestLoader;
 import ru.cyberc3dr.quiz.scoring.GradingStrategy;
-import ru.cyberc3dr.quiz.scoring.PassFailStrategy;
-import ru.cyberc3dr.quiz.scoring.PercGradingStrategy;
 import ru.cyberc3dr.quiz.test.Test;
 
 import java.util.Scanner;
