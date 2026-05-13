@@ -31,7 +31,7 @@ public final class TestBuilder implements ITestBuilder {
     @Override
     public Test build() {
         if (nodes.isEmpty()) {
-            throw new IllegalStateException("Test must contain at least one node");
+            throw new IllegalStateException("Тест должен содержать хотя бы один узел");
         }
 
         QuestionSection rootSection = new QuestionSection("");

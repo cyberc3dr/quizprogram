@@ -24,7 +24,7 @@ public final class RangedAnswer implements Answer {
 
             return number >= min && number <= max;
         } catch (NumberFormatException e) {
-            System.out.println("Input must be a number!");
+            System.out.println("Ввод должен быть числом!");
         }
 
         return false;

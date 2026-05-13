@@ -43,7 +43,8 @@ public final class FileTestLoader implements TestLoader {
 
             return builder.build();
         } catch (IOException | NumberFormatException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ошибка при загрузке теста: " + e.getMessage());
+            return null;
         }
     }
 }

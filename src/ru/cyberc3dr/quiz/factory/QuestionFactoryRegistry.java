@@ -25,6 +25,19 @@ public final class QuestionFactoryRegistry {
         return INSTANCE;
     }
 
+    /**
+     * Ининиализация дефолтных фабрик
+     */
+    public static void initDefaults() {
+        QuestionFactoryRegistry registry = getInstance();
+
+        registry.register("text", new TextQuestionFactory());
+        registry.register("single", new SingleQuestionFactory());
+        registry.register("multi", new MultiQuestionFactory());
+        registry.register("ordered", new OrderedQuestionFactory());
+        registry.register("ranged", new RangedQuestionFactory());
+    }
+
     public void register(String type, QuestionFactory factory) {
         map.put(type, factory);
     }
@@ -33,7 +46,7 @@ public final class QuestionFactoryRegistry {
         QuestionFactory factory = map.get(data.get("QuestionType"));
 
         if(factory == null) {
-            throw new IllegalArgumentException("Unknown question type: " + data.get("QuestionType"));
+            throw new IllegalArgumentException("Неизвестный тип вопроса: " + data.get("QuestionType"));
         }
 
         return factory.createQuestion(data);

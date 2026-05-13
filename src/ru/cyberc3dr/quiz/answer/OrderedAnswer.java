@@ -23,7 +23,7 @@ public final class OrderedAnswer implements Answer {
 
             return ans.equals(correctValues);
         } catch (NumberFormatException e) {
-            System.out.println("Input must be a comma-separated list of numbers!");
+            System.out.println("Ввод должен быть списком чисел через запятую!");
         }
 
         return false;

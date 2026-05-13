@@ -64,7 +64,7 @@ public final class PlainTestParser implements TestParser<String> {
 
             if (line.equals(MENU_END)) {
                 if (sectionStack.isEmpty()) {
-                    throw new IllegalArgumentException("Unexpected endmenu at line " + (i + 1));
+                    throw new IllegalArgumentException("Неожиданный endmenu на строке " + (i + 1));
                 }
                 sectionStack.pop();
                 continue;
@@ -88,22 +88,22 @@ public final class PlainTestParser implements TestParser<String> {
                     if (questionLine.equals(QUESTION_START)
                             || questionLine.startsWith(MENU_START)
                             || questionLine.equals(MENU_END)) {
-                        throw new IllegalArgumentException("Question block started at line "
-                                + questionStartLine + " is missing endquestion");
+                        throw new IllegalArgumentException("Блок вопроса который начался на строке "
+                                + questionStartLine + " не закрыт используя endquestion");
                     }
 
                     String[] parts = questionLine.split(":\\s*", 2);
                     if (parts.length != 2) {
-                        throw new IllegalArgumentException("Invalid question property at line " + (i + 1)
-                                + ". Expected 'Key: Value'");
+                        throw new IllegalArgumentException("Неправильный параметр вопроса на строке " + (i + 1)
+                                + ". Ожидалось 'Ключ: Значение'");
                     }
                     data.put(parts[0].trim(), parts[1].trim());
                     i++;
                 }
 
                 if (i >= lines.length || !lines[i].trim().equals(QUESTION_END)) {
-                    throw new IllegalArgumentException("Question block started at line "
-                            + questionStartLine + " is missing endquestion");
+                    throw new IllegalArgumentException("Блок вопроса который начался на строке "
+                            + questionStartLine + " не закрыт используя endquestion");
                 }
 
                 Question question = registry.create(new MapQuestionData(data));
@@ -115,15 +115,15 @@ public final class PlainTestParser implements TestParser<String> {
                 continue;
             }
 
-            throw new IllegalArgumentException("Unknown directive at line " + (i + 1) + ": " + line);
+            throw new IllegalArgumentException("Неизвестная директива на строке " + (i + 1) + ": " + line);
         }
 
         if (!sectionStack.isEmpty()) {
-            throw new IllegalArgumentException("There is at least one unclosed menu block");
+            throw new IllegalArgumentException("Есть один незакрытый блок menu");
         }
 
         if (rootNodes.isEmpty()) {
-            throw new IllegalArgumentException("Quiz must contain at least one question");
+            throw new IllegalArgumentException("Тест должен содержать хотя бы один вопрос.");
         }
 
         return rootNodes;
@@ -132,7 +132,7 @@ public final class PlainTestParser implements TestParser<String> {
     private String parseMenuTitle(String menuLine, int lineNumber) {
         String title = menuLine.substring("menu".length()).trim();
         if (title.isEmpty()) {
-            throw new IllegalArgumentException("Menu title is missing at line " + lineNumber);
+            throw new IllegalArgumentException("Заголовок меню отсутствует на строке " + lineNumber);
         }
 
         if (title.length() >= 2 && title.startsWith("\"") && title.endsWith("\"")) {
